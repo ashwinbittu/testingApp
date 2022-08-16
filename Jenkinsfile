@@ -34,7 +34,7 @@ pipeline {
 
         stage('Sonar Code Analysis') {
             environment {
-                scannerHome = tool 'sonar4.7'
+                scannerHome = tool 'sonarqscan'
             }
             steps {
                withSonarQubeEnv('sonar') {
