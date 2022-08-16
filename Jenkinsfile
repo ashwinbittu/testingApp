@@ -60,7 +60,7 @@ pipeline {
             }
         }
 
-        stage("UploadArtifact"){
+        /*stage("UploadArtifact Nexus"){
                     steps{
                         nexusArtifactUploader(
                         nexusVersion: 'nexus3',
@@ -78,7 +78,31 @@ pipeline {
             ]
         )
             }
-        }        
+        }*/  
+
+        stage ('UploadArtifact Artifactory') {
+                    steps {
+                        rtServer (
+                            id: "jfrog",
+                            url: "https://ashwinbittu.jfrog.io/artifactory",
+                            credentialsId: "jfrog-artifactory-saas"
+                        )
+
+                        rtMavenDeployer (
+                            id: "MAVEN_DEPLOYER",
+                            serverId: "jfrog",
+                            releaseRepo: "default-libs-release-local",
+                            snapshotRepo: "default-libs-snapshot-local"
+                        )
+
+                        rtMavenResolver (
+                            id: "MAVEN_RESOLVER",
+                            serverId: "jfrog",
+                            releaseRepo: "default-libs-release",
+                            snapshotRepo: "default-libs-snapshot"
+                        )
+                    }
+            }              
 
     }
 }
