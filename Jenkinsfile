@@ -82,13 +82,13 @@ pipeline {
 
         stage ('UploadArtifact Artifactory') {
                     steps {
-                        rtServer (
-                            id: "jfrog",
+                        /*rtServer (
+                            id: "jfrog-artifactory-saas",
                             url: "https://ashwinbittu.jfrog.io/artifactory",
                             credentialsId: "jfrog-artifactory-saas"
-                        )
+                        )*/
 
-                        rtMavenDeployer (
+                        /*rtMavenDeployer (
                             id: "MAVEN_DEPLOYER",
                             serverId: "jfrog",
                             releaseRepo: "default-libs-release-local",
@@ -100,7 +100,22 @@ pipeline {
                             serverId: "jfrog",
                             releaseRepo: "default-libs-release",
                             snapshotRepo: "default-libs-snapshot"
-                        )
+                        )*/
+
+                        rtUpload (
+                            buildName: JOB_NAME,
+                            buildNumber: BUILD_NUMBER,
+                            serverId: 'jfrog-artifactory-saas', // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                            spec: '''{
+                                    "files": [
+                                        {
+                                        "pattern": "target/vprofile-v2.war",
+                                        "target": "default-libs-release-local/",
+                                        "recursive": "false"
+                                        } 
+                                    ]
+                                }'''    
+                        )                        
                     }
             }              
 
