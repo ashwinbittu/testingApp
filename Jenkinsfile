@@ -1,3 +1,7 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good', 
+    'FAILURE': 'danger',
+]
 pipeline {
     agent any
 
@@ -31,7 +35,7 @@ pipeline {
             }
 
         }
-
+        /*
         stage('Sonar Code Analysis') {
             environment {
                 scannerHome = tool 'sonarqscan'
@@ -50,7 +54,7 @@ pipeline {
             }
         }  
 
-        /*stage("Quality Gate") {
+        stage("Quality Gate") {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
@@ -78,30 +82,11 @@ pipeline {
             ]
         )
             }
-        }*/  
+        }
+        */  
 
         stage ('UploadArtifact Artifactory') {
                     steps {
-                        /*rtServer (
-                            id: "jfrog-artifactory-saas",
-                            url: "https://ashwinbittu.jfrog.io/artifactory",
-                            credentialsId: "jfrog-artifactory-saas"
-                        )*/
-
-                        /*rtMavenDeployer (
-                            id: "MAVEN_DEPLOYER",
-                            serverId: "jfrog",
-                            releaseRepo: "default-libs-release-local",
-                            snapshotRepo: "default-libs-snapshot-local"
-                        )
-
-                        rtMavenResolver (
-                            id: "MAVEN_RESOLVER",
-                            serverId: "jfrog",
-                            releaseRepo: "default-libs-release",
-                            snapshotRepo: "default-libs-snapshot"
-                        )*/
-
                         rtUpload (
                             buildName: JOB_NAME,
                             buildNumber: BUILD_NUMBER,
@@ -117,7 +102,15 @@ pipeline {
                                 }'''    
                         )                        
                     }
-            }              
+            }    
+        post {
+            always {
+                echo 'Slack Notifications.'
+                slackSend channel: '#jenkinscicd',
+                    color: COLOR_MAP[currentBuild.currentResult],
+                    message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+            }
+        }                      
 
     }
 }
