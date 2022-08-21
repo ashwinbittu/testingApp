@@ -120,12 +120,12 @@ pipeline {
 
         stage ('Upload App Image to Artifactory') {
                     steps {
-                        //sh 'docker tag ${appRegistry}:${BUILD_NUMBER} ${artifactrepo}/${appname}:${BUILD_NUMBER}'
+                        sh 'docker tag ${appRegistry}:${BUILD_NUMBER} ${artifactrepo}/${appname}'
                         //sh 'docker login -u ${artifactrepo} -p ${appname}'
                         //sh 'docker push ${artifactrepo}/${appname}:${BUILD_NUMBER}'
                         //sh 'docker logout'
                         script {
-                            dockerImage = '${appRegistry}:${BUILD_NUMBER}'
+                            dockerImage = '${artifactrepo}/${appname}'
                             docker.withRegistry( artficatreporeg, artifactrepocreds ) {
                                 dockerImage.push("$BUILD_NUMBER")
                                 //dockerImage.push('latest')
