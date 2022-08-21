@@ -126,7 +126,7 @@ pipeline {
                                     "files": [
                                         {
                                         "pattern": "${artifactrepo}/${appname}:${BUILD_NUMBER}",
-                                        "target": "",
+                                        "target": "/",
                                         "recursive": "false"
                                         } 
                                     ]
