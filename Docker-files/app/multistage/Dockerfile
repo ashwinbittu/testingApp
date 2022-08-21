@@ -8,11 +8,13 @@ RUN ls -rtl /tmp
 
 FROM tomcat:8-jre11
 WORKDIR /tmp
-RUN ls -rtl
+
 
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-COPY --from=BUILD_IMAGE /testingApp/target/radammcorp-v2.war /usr/local/tomcat/webapps/ROOT.war
+RUN ls -rtl
+RUN ls -rtl /var/lib/jenkins/workspace/testpipeline/target
+COPY --from=BUILD_IMAGE /var/lib/jenkins/workspace/testpipeline/target/radammcorp-v2.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
