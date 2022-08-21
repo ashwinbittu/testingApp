@@ -102,7 +102,7 @@ pipeline {
         
         }
 
-        stage('Upload App Image') {
+        stage('Upload App Image to ECR') {
             steps{
                 script {
                 docker.withRegistry( profileRegistry, registryCredential ) {
@@ -113,7 +113,7 @@ pipeline {
             }
         }
 
-        stage ('UploadArtifact Artifactory') {
+        stage ('Upload App Image to Artifactory') {
                     steps {
                         rtUpload (
                             buildName: JOB_NAME,
@@ -122,7 +122,7 @@ pipeline {
                             spec: '''{
                                     "files": [
                                         {
-                                        "pattern": "target/vprofile-v2.war",
+                                        "pattern": "${profileRegistry}/${buildNumber}",
                                         "target": "docker-local/",
                                         "recursive": "false"
                                         } 
