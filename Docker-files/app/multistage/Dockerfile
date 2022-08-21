@@ -6,7 +6,7 @@ RUN cd testingApp && mvn install
 FROM tomcat:8-jre11
 
 RUN rm -rf /usr/local/tomcat/webapps/*
-RUN PWD
+RUN ls -rtl
 COPY --from=BUILD_IMAGE target/radammcorp-v2.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
