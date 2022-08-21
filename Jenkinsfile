@@ -117,7 +117,7 @@ pipeline {
 
         stage ('Upload App Image to Artifactory') {
                     steps {
-                        sh 'docker tag ${appRegistry}:${buildNumber} ${artifactrepo}/${appname}:${buildNumber}'
+                        sh 'docker tag ${appRegistry}:${BUILD_NUMBER} ${artifactrepo}/${appname}:${BUILD_NUMBER}'
                         rtUpload (
                             buildName: JOB_NAME,
                             buildNumber: BUILD_NUMBER,
