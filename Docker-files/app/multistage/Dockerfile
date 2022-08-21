@@ -1,12 +1,13 @@
-WORKDIR /tmp
 FROM openjdk:8 AS BUILD_IMAGE
+WORKDIR /tmp
 RUN apt update && apt install maven -y
 RUN git clone -b docker https://github.com/ashwinbittu/testingApp.git
 RUN cd testingApp && mvn install
 ls -rtl /tmp
 
-WORKDIR /tmp
+
 FROM tomcat:8-jre11
+WORKDIR /tmp
 
 RUN rm -rf /usr/local/tomcat/webapps/*
 
