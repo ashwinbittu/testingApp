@@ -11,8 +11,11 @@ pipeline {
         profileRegistry = "https://043042377913.dkr.ecr.ap-southeast-2.amazonaws.com"
         cluster = "vprofile"
         service = "vprofileappsvc"
+
         artifactrepo = "ashwinbittu.jfrog.io/docker-local"
+        artifactrepocreds = jfrog-artifact-saas
         appname = "testingapp"
+
     }
 
     stages{
@@ -117,8 +120,17 @@ pipeline {
 
         stage ('Upload App Image to Artifactory') {
                     steps {
-                        sh 'docker tag ${appRegistry}:${BUILD_NUMBER} ${artifactrepo}/${appname}:${BUILD_NUMBER}'
-                        sh 'docker push ${artifactrepo}/${appname}:${BUILD_NUMBER}'
+                        //sh 'docker tag ${appRegistry}:${BUILD_NUMBER} ${artifactrepo}/${appname}:${BUILD_NUMBER}'
+                        //sh 'docker login -u ${artifactrepo} -p ${appname}'
+                        //sh 'docker push ${artifactrepo}/${appname}:${BUILD_NUMBER}'
+                        //sh 'docker logout'
+                        script {
+                        docker.withRegistry( artifactrepo/appname, artifactrepocreds ) {
+                            dockerImage.push("$BUILD_NUMBER")
+                            //dockerImage.push('latest')
+                        }
+                        }
+
                         /*rtUpload (
                             buildName: JOB_NAME,
                             buildNumber: BUILD_NUMBER,
