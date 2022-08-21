@@ -38,8 +38,7 @@ systemctl start tomcat
 systemctl enable tomcat
 
 cd /tmp/
-wget https://raw.githubusercontent.com/devopshydclub/vprofile-repo/master/tomcat-users.xml
-wget https://raw.githubusercontent.com/devopshydclub/vprofile-repo/master/context.xml
+
 cp tomcat-users.xml /usr/local/tomcat8/conf/tomcat-users.xml
 cp context.xml /usr/local/tomcat8/webapps/manager/META-INF/
 systemctl restart tomcat

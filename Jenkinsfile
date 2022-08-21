@@ -42,11 +42,11 @@ pipeline {
             }
             steps {
                withSonarQubeEnv('sonar') {
-                   sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
-                   -Dsonar.projectName=vprofile \
+                   sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=radammcorp \
+                   -Dsonar.projectName=radammcorp \
                    -Dsonar.projectVersion=1.0 \
                    -Dsonar.sources=src/ \
-                   -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+                   -Dsonar.java.binaries=target/test-classes/com/radammcorpit/account/controllerTest/ \
                    -Dsonar.junit.reportsPath=target/surefire-reports/ \
                    -Dsonar.jacoco.reportsPath=target/jacoco.exec \
                    -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
@@ -64,25 +64,6 @@ pipeline {
             }
         }
 
-        stage("UploadArtifact Nexus"){
-                    steps{
-                        nexusArtifactUploader(
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        nexusUrl: '172.31.23.157:8081',
-                        groupId: 'QA',
-                        version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
-                        repository: 'vprofile-repo',
-                        credentialsId: 'nexuslogin',
-                        artifacts: [
-                            [artifactId: 'vproapp',
-                            classifier: '',
-                            file: 'target/vprofile-v2.war',
-                            type: 'war']
-            ]
-        )
-            }
-        }
         */  
 
         stage ('UploadArtifact Artifactory') {
