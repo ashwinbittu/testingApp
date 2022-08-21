@@ -9,13 +9,15 @@ pipeline {
         registryCredential = 'ecr:ap-southeast-2:awscreds'
         appRegistry = "043042377913.dkr.ecr.ap-southeast-2.amazonaws.com/testappimg"
         profileRegistry = "https://043042377913.dkr.ecr.ap-southeast-2.amazonaws.com"
-        cluster = "vprofile"
-        service = "vprofileappsvc"
+
 
         appname = "testingapp"
         artficatreporeg = "https://ashwinbittu.jfrog.io"
         artifactrepo = "ashwinbittu.jfrog.io/docker-local/$appname"
         artifactrepocreds = 'jfrog-artifact-saas'
+
+        cluster = "testcluster"
+        service = "testingappsvc"        
     }
 
     stages{
@@ -144,16 +146,16 @@ pipeline {
                     }
         }
 
-/*
-        stage('Deploy to ecs') {
+
+        stage('Deploy to ECS') {
                 steps {
-                withAWS(credentials: 'awscreds', region: 'us-east-2') {
-                sh 'aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment'
+                    withAWS(credentials: 'awscreds', region: 'ap-southeast-2') {
+                    sh 'aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment'
                 }
             }
             }
  
-        */        
+              
         /*
         post {
             always {
