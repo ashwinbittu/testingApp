@@ -122,7 +122,7 @@ pipeline {
                             spec: '''{
                                     "files": [
                                         {
-                                        "pattern": "${profileRegistry}/${buildNumber}",
+                                        "pattern": "${appRegistry}/${buildNumber}",
                                         "target": "docker-local/",
                                         "recursive": "false"
                                         } 
