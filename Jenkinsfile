@@ -123,9 +123,10 @@ pipeline {
                         sh 'docker tag ${appRegistry}:${BUILD_NUMBER} ${artifactrepo}:${BUILD_NUMBER}'
                         script {
                             docker.withRegistry( artficatreporeg, artifactrepocreds ) {
+                                sh 'docker push ${artifactrepo}:${BUILD_NUMBER}'
                             }
                         }
-                        sh 'docker push ${artifactrepo}:${BUILD_NUMBER}'
+                        
 
                         /*rtUpload (
                             buildName: JOB_NAME,
