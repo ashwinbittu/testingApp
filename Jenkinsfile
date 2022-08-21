@@ -125,7 +125,7 @@ pipeline {
                         //sh 'docker push ${artifactrepo}/${appname}:${BUILD_NUMBER}'
                         //sh 'docker logout'
                         script {
-                            dockerImage = ${appRegistry}:${BUILD_NUMBER}
+                            dockerImage = '${appRegistry}:${BUILD_NUMBER}'
                             docker.withRegistry( artficatreporeg, artifactrepocreds ) {
                                 dockerImage.push("$BUILD_NUMBER")
                                 //dockerImage.push('latest')
