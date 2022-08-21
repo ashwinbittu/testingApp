@@ -13,7 +13,7 @@ pipeline {
         service = "vprofileappsvc"
 
         artifactrepo = "ashwinbittu.jfrog.io/docker-local"
-        artifactrepocreds = jfrog-artifact-saas
+        artifactrepocreds = 'jfrog-artifact-saas'
         appname = "testingapp"
 
     }
