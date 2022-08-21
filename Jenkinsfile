@@ -6,9 +6,9 @@ pipeline {
     agent any
 
     environment {
-        registryCredential = 'ecr:us-east-2:awscreds'
-        appRegistry = "951401132355.dkr.ecr.us-east-2.amazonaws.com/vprofileappimg"
-        vprofileRegistry = "https://951401132355.dkr.ecr.us-east-2.amazonaws.com"
+        registryCredential = 'ecr:ap-southeast-2:awscreds'
+        appRegistry = "043042377913.dkr.ecr.ap-southeast-2.amazonaws.com/testappimg"
+        profileRegistry = "https://043042377913.dkr.ecr.ap-southeast-2.amazonaws.com"
         cluster = "vprofile"
         service = "vprofileappsvc"
     }
@@ -61,7 +61,6 @@ pipeline {
               }
             }
         }  
-
         stage("Quality Gate") {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
@@ -71,7 +70,6 @@ pipeline {
                 }
             }
         }
-
         stage("UploadArtifact Nexus"){
                     steps{
                         nexusArtifactUploader(
@@ -107,14 +105,14 @@ pipeline {
         stage('Upload App Image') {
             steps{
                 script {
-                docker.withRegistry( vprofileRegistry, registryCredential ) {
+                docker.withRegistry( profileRegistry, registryCredential ) {
                     dockerImage.push("$BUILD_NUMBER")
                     dockerImage.push('latest')
                 }
                 }
             }
         }
-
+/*
         stage('Deploy to ecs') {
                 steps {
                 withAWS(credentials: 'awscreds', region: 'us-east-2') {
@@ -141,7 +139,8 @@ pipeline {
                                 }'''    
                         )                        
                     }
-            }    
+            } 
+        */        
         /*
         post {
             always {
