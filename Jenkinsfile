@@ -118,7 +118,8 @@ pipeline {
         stage ('Upload App Image to Artifactory') {
                     steps {
                         sh 'docker tag ${appRegistry}:${BUILD_NUMBER} ${artifactrepo}/${appname}:${BUILD_NUMBER}'
-                        rtUpload (
+                        sh 'docker push ${artifactrepo}/${appname}:${BUILD_NUMBER}'
+                        /*rtUpload (
                             buildName: JOB_NAME,
                             buildNumber: BUILD_NUMBER,
                             serverId: 'jfrog-artifactory-saas', // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
@@ -131,7 +132,7 @@ pipeline {
                                         } 
                                     ]
                                 }'''    
-                        )                        
+                        )*/                         
                     }
         }
 
