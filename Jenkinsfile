@@ -13,6 +13,7 @@ pipeline {
         service = "vprofileappsvc"
 
         appname = "testingapp"
+        artficatreporeg = "https://ashwinbittu.jfrog.io"
         artifactrepo = "ashwinbittu.jfrog.io/docker-local/$appname"
         artifactrepocreds = 'jfrog-artifact-saas'
     }
@@ -124,10 +125,11 @@ pipeline {
                         //sh 'docker push ${artifactrepo}/${appname}:${BUILD_NUMBER}'
                         //sh 'docker logout'
                         script {
-                            docker.withRegistry( artifactrepo, artifactrepocreds ) {
-                            dockerImage.push("$BUILD_NUMBER")
-                            //dockerImage.push('latest')
-                        }
+                            dockerImage = ${appRegistry}:${BUILD_NUMBER}
+                            docker.withRegistry( artficatreporeg, artifactrepocreds ) {
+                                dockerImage.push("$BUILD_NUMBER")
+                                //dockerImage.push('latest')
+                            }
                         }
 
                         /*rtUpload (
