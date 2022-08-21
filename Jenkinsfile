@@ -12,10 +12,9 @@ pipeline {
         cluster = "vprofile"
         service = "vprofileappsvc"
 
-        artifactrepo = "ashwinbittu.jfrog.io/docker-local"
-        artifactrepocreds = 'jfrog-artifact-saas'
         appname = "testingapp"
-
+        artifactrepo = "ashwinbittu.jfrog.io/docker-local/$appname"
+        artifactrepocreds = 'jfrog-artifact-saas'
     }
 
     stages{
@@ -110,7 +109,7 @@ pipeline {
         stage('Upload App Image to ECR') {
             steps{
                 script {
-                docker.withRegistry( profileRegistry, registryCredential ) {
+                    docker.withRegistry( profileRegistry, registryCredential ) {
                     dockerImage.push("$BUILD_NUMBER")
                     dockerImage.push('latest')
                 }
@@ -125,7 +124,7 @@ pipeline {
                         //sh 'docker push ${artifactrepo}/${appname}:${BUILD_NUMBER}'
                         //sh 'docker logout'
                         script {
-                        docker.withRegistry( artifactrepo/appname, artifactrepocreds ) {
+                            docker.withRegistry( artifactrepo, artifactrepocreds ) {
                             dockerImage.push("$BUILD_NUMBER")
                             //dockerImage.push('latest')
                         }
