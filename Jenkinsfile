@@ -125,8 +125,8 @@ pipeline {
                             spec: '''{
                                     "files": [
                                         {
-                                        "pattern": "${artifactrepo}/${appname}:${buildNumber}",
-                                        "target": "docker-local/",
+                                        "pattern": "${artifactrepo}/${appname}:${BUILD_NUMBER}",
+                                        
                                         "recursive": "false"
                                         } 
                                     ]
