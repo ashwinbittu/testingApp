@@ -1,9 +1,11 @@
-FROM mysql:5.7.25
+FROM tomcat:8-jre11
 LABEL "Project"="testingApp"
 LABEL "Author"="ashwinbittu"
 
-ENV MYSQL_ROOT_PASSWORD="vprodbpass"
-ENV MYSQL_DATABASE="accounts"
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY target/radammcorp-v2.war /usr/local/tomcat/webapps/ROOT.war
 
-
-ADD db_backup.sql docker-entrypoint-initdb.d/db_backup.sql
+EXPOSE 8080
+CMD ["catalina.sh", "run"]
+WORKDIR /usr/local/tomcat/
+VOLUME /usr/local/tomcat/webapps

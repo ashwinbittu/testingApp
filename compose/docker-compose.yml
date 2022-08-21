@@ -1,20 +1,20 @@
 version: '3'
 services:
-  vprodb:
+  radammcorpdb:
     image: vprofile/vprofiledb:V1
     ports:
       - "3306:3306"
     volumes:
-      - vprodbdata:/var/lib/mysql
+      - radammcorpdbdata:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=vprodbpass
+      - MYSQL_ROOT_PASSWORD=radammcorpdbpass
 
-  vprocache01:
+  radammcorpcache01:
     image: memcached
     ports:
       - "11211:11211"
 
-  vpromq01:
+  radammcorpmq01:
     image: rabbitmq
     ports:
       - "15672:15672"
@@ -22,17 +22,17 @@ services:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
 
-  vproapp:
-    image: vprofile/vprofileapp:V1
+ radammcorpapp:
+    image: radammcorp/radammcorpapp:V1
     ports:
       - "8080:8080"
     volumes: 
-      - vproappdata:/usr/local/tomcat/webapps
+      - radammcorpappdata:/usr/local/tomcat/webapps
 
-  vproweb:
-    image: vprofile/vprofileweb:V1
+  radammcorpweb:
+    image: radammcorp/radammcorpweb:V1
     ports:
       - "80:80"
 volumes:
-  vprodbdata: {}
-  vproappdata: {}
+  radammcorpdbdata: {}
+  radammcorpappdata: {}
