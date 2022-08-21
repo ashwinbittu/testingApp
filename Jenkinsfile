@@ -12,7 +12,7 @@ pipeline {
         cluster = "vprofile"
         service = "vprofileappsvc"
         artifactrepo = "ashwinbittu.jfrog.io/docker-local"
-        appname = testingApp
+        appname = "testingApp"
     }
 
     stages{
